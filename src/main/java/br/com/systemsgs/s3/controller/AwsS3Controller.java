@@ -4,6 +4,8 @@ import br.com.systemsgs.s3.service.AwsS3Service;
 import com.amazonaws.services.s3.model.Bucket;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,12 @@ public class AwsS3Controller {
         var buckets = awsS3Service.listarBuckets();
         var names = buckets.stream().map(Bucket::getName).collect(Collectors.toList());
         return names;
+    }
+
+    @GetMapping(value = "/{bucketName}/objects/{objectName}")
+    public File downloadObject(@PathVariable String bucketName, @PathVariable String objectName) throws IOException {
+        awsS3Service.downloadObject(bucketName, objectName);
+        return new File("./" + objectName);
     }
 
     @DeleteMapping(value = "/{bucketName}")
