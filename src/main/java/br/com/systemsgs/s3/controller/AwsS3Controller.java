@@ -23,10 +23,15 @@ public class AwsS3Controller {
     }
 
     @GetMapping(value = "/listaBuckets")
-    public List<String> listBuckets(){
+    public List<String> listaBuckets(){
         var buckets = awsS3Service.listarBuckets();
         var names = buckets.stream().map(Bucket::getName).collect(Collectors.toList());
         return names;
+    }
+
+    @DeleteMapping(value = "/{bucketName}")
+    public void deleteBucket(@PathVariable String bucketName){
+        awsS3Service.deleteBucket(bucketName);
     }
 
 }
