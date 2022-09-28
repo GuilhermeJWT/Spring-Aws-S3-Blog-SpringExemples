@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsS3Configuration {
 
+    /* Insira o Usuário e Senha configurado no IAM da Aws */
     public AWSCredentials credentials() {
-        AWSCredentials awsCredentials = new BasicAWSCredentials("accesskey", "secretkey");
+        AWSCredentials awsCredentials = new BasicAWSCredentials("user_iam_aws", "password_iam_aws");
         return awsCredentials;
     }
 

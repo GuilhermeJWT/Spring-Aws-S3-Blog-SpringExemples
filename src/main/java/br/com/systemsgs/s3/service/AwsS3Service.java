@@ -45,12 +45,6 @@ public class AwsS3Service {
         }
     }
 
-    /* Lista Objetos pelo nome do Bucket */
-    public List<S3ObjectSummary> listaObjetos(String bucketName){
-        ObjectListing objectListing = amazonS3Client.listObjects(bucketName);
-        return objectListing.getObjectSummaries();
-    }
-
     /*Download de um Arquivo no S3 - primeiro busca pelo bucket e nome do arquivo*/
     public void downloadObject(String bucketName, String objectName){
         S3Object s3object = amazonS3Client.getObject(bucketName, objectName);
