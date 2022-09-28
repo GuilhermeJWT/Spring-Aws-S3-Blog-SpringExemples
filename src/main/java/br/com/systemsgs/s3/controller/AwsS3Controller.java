@@ -1,10 +1,11 @@
 package br.com.systemsgs.s3.controller;
 
 import br.com.systemsgs.s3.service.AwsS3Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.amazonaws.services.s3.model.Bucket;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/bucket")
@@ -17,8 +18,15 @@ public class AwsS3Controller {
     }
 
     @PostMapping(value = "/{bucketName}")
-    public void createBucket(@PathVariable String bucketName){
+    public void criaBucket(@PathVariable String bucketName){
         awsS3Service.criaBucketS3(bucketName);
+    }
+
+    @GetMapping(value = "/listaBuckets")
+    public List<String> listBuckets(){
+        var buckets = awsS3Service.listarBuckets();
+        var names = buckets.stream().map(Bucket::getName).collect(Collectors.toList());
+        return names;
     }
 
 }
